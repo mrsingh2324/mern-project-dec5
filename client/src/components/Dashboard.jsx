@@ -31,7 +31,7 @@ const Dashboard = () => {
   const fetchPortfolio = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5004/getPortfolio/${user?.portfolio}`,
+        `https://mern-project-dec5.onrender.com/getPortfolio/${user?.portfolio}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -47,7 +47,7 @@ const Dashboard = () => {
   const handleCreatePortfolio = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5004/createPortfolio",
+        "https://mern-project-dec5.onrender.com/createPortfolio",
         {
           bio: bioInput,
           jobTitle: jobTitleInput
@@ -75,7 +75,7 @@ const Dashboard = () => {
   const handleUpdatePortfolio = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5004/updatePortfolio/${user?.portfolio}`,
+        `https://mern-project-dec5.onrender.com/updatePortfolio/${user?.portfolio}`,
         {
           bio: bioInput,
           jobTitle: jobTitleInput
@@ -97,7 +97,7 @@ const Dashboard = () => {
   const deletePortfolio = async () => {
     try {
       await axios.delete(
-        `http://localhost:5004/deletePortfolio/${user?.portfolio}`,
+        `https://mern-project-dec5.onrender.com/deletePortfolio/${user?.portfolio}`,
         {
           headers: {
             Authorization: `Bearer ${token}`

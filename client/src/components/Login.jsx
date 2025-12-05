@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try{
-      const response = await axios.post("http://localhost:5004/login", { email, password })
+      const response = await axios.post("https://mern-project-dec5.onrender.com/login", { email, password })
       const {user, token } = response.data
       setUser(user)
       localStorage.setItem("token", token)

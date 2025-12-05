@@ -12,7 +12,7 @@ const Register = () => {
 
         e.preventDefault()
         try{
-            const response = await axios.post("http://localhost:5004/register", {
+            const response = await axios.post("https://mern-project-dec5.onrender.com/register", {
                 name,
                 email,
                 password
