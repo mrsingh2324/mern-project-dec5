@@ -92,25 +92,31 @@ app.post("/login", async (req, res) => {
 })
 
 // Create Portfolio
+// Create Portfolio
 app.post("/createPortfolio", verifyToken, async (req, res) => {
     try {
-        const { bio, jobTitle } = req.body
+        // Check if portfolio already exists
+        const existing = await PortfolioModel.findOne({ user: req.user.id });
+        if (existing) return res.status(400).json("Portfolio already exists");
+
+        const { bio, jobTitle } = req.body;
 
         const portfolio = await PortfolioModel.create({
             user: req.user.id,
             bio,
             jobTitle
-        })
+        });
 
         // link to user
-        await UserModel.findByIdAndUpdate(req.user.id, { portfolio: portfolio._id })
+        await UserModel.findByIdAndUpdate(req.user.id, { portfolio: portfolio._id });
 
-        res.status(200).json(portfolio)
+        res.status(200).json(portfolio);
     } catch (err) {
-        console.log(err.message)
-        res.status(500).json("Error creating portfolio")
+        console.log(err.message);
+        res.status(500).json("Error creating portfolio");
     }
-})
+});
+
 
 
 // Get Portfolio
@@ -138,15 +144,20 @@ app.put("/updatePortfolio/:id", verifyToken, async (req, res) => {
 
 
 // Delete Portfolio
+// Delete Portfolio
 app.delete("/deletePortfolio/:id", verifyToken, async (req, res) => {
     try {
-        await PortfolioModel.findByIdAndDelete(req.params.id)
-        res.status(200).json("Portfolio deleted successfully")
+        await PortfolioModel.findByIdAndDelete(req.params.id);
+
+        // Remove reference from user
+        await UserModel.findByIdAndUpdate(req.user.id, { portfolio: null });
+
+        res.status(200).json("Portfolio deleted successfully");
     } catch (err) {
-        console.log(err.message)
-        res.status(500).json("Error deleting portfolio")
+        console.log(err.message);
+        res.status(500).json("Error deleting portfolio");
     }
-})
+});
 
 // Server
 app.listen(5004, () =>
