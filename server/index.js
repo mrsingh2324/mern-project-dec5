@@ -6,7 +6,12 @@ import jwt from 'jsonwebtoken'
 dotenv.config()
 
 const app = express();
-app.use(cors());
+app.use(cors(
+    {
+        origin: "https://mern-project-dec5.vercel.app/",
+        credentials: true
+    }
+));
 app.use(express.json());
 
 // DB connection
